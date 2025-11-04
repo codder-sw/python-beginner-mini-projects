@@ -1,0 +1,103 @@
+✅ Concepts Used in the Water Reminder Program
+1. Import Statements
+import time
+
+time is a built-in Python module.
+
+It provides functions to work with time, delays, and scheduling.
+
+from plyer import notification
+
+plyer is an external Python package used to access device features.
+
+notification module inside it allows sending desktop notifications.
+
+Think of modules as toolkits — you bring tools only when needed.
+
+2. Infinite Loop (while True:)
+while True:
+
+A while loop repeats code until a condition becomes false.
+
+True is always true → loop never stops (runs forever)
+
+Used here to repeat notifications every hour.
+
+Like an alarm that keeps ringing after every set interval.
+
+3. Print Function
+print("Please sip a water!!")
+
+Displays text in the console.
+
+Good for debugging & user visibility.
+
+4. Desktop Notification
+notification.notify(title=..., message=...)
+
+This shows system notification pop-ups.
+
+Parameters:
+
+title: heading of notification
+
+message: detailed reminder message
+
+Example:
+
+🔔 Please drink some water  
+You need to drink some water
+
+
+Real-world use: Health apps, hydration reminders, alert systems.
+
+5. Sleep / Delay Function
+time.sleep(60*60)
+
+Pauses execution for a specific time.
+
+60 * 60 = 3600 seconds = 1 hour
+
+So loop waits 1 hour before showing next reminder.
+
+Like pressing “wait” button in a reminder system.
+
+6. Multiplication Inside Sleep
+60 * 60
+
+Simple multiplication meaning 60 seconds × 60 = 1 hour
+
+Better than writing 3600 (more readable, maintainable)
+
+How Program Works (Flow Understanding)
+Step	Action
+1	Import modules
+2	Start infinite loop
+3	Print water reminder in terminal
+4	Show notification popup
+5	Wait 1 hour
+6	Repeat again
+✅ Why This Program Is Useful
+
+Teaches automation
+
+Real-life application: health & productivity reminder
+
+Uses external libraries & infinite loops
+
+Demonstrates system notifications
+
+📦 Bonus: Required Package Install
+
+To run this, install plyer first:
+
+pip install plyer
+
+🎯 Concepts Summary Table
+Concept	Purpose
+import	Bring extra functions in program
+plyer.notification	Send desktop alert pop-ups
+while True:	Run forever (infinite loop)
+print()	Display message in console
+sleep()	Pause program for set time
+60*60	Time calculation (1 hour)
