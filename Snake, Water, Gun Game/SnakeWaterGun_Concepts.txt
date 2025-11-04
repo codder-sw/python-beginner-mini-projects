@@ -132,7 +132,7 @@ If user types anything other than s/w/g, show error.
 After this game you learned:
 
 * Python input
-* Condition checks (if-elif-else)
+* Condition checks (if‑elif‑else)
 * Dictionary usage
 * Random module
 * Game logic thinking
@@ -146,5 +146,32 @@ After this game you learned:
 * Play multiple rounds
 * Add GUI version
 * Add emoji output 🎮🐍💧🔫
+
+## ✅ Python Concepts Used (Checklist)
+
+* **random module** – to generate computer's random choice
+* **input() function** – to take input from user
+* **.lower() method** – converts input to lowercase to avoid errors
+* **Dictionary `{}`** – to map letters to numbers and numbers to names
+* **if-elif-else conditions** – to check rules and find winner
+* **Comparison Operators (`==`, etc.)** – compare choices
+* **Variables** – store values like `computer`, `you`, etc.
+* **print() function** – display output to player
+* **Functions (def)** – custom game function (if used later)
+
+### 📌 Short Explanation of Concepts
+
+| Concept           | Meaning                                   |
+| ----------------- | ----------------------------------------- |
+| `random.choice()` | Selects a random item from a list         |
+| `input()`         | Takes user input from keyboard            |
+| `.lower()`        | Converts text to lowercase ("S" → "s")    |
+| Dictionary        | Stores values in key–value form (`"s":1`) |
+| `if-elif-else`    | Decision making in program                |
+| Comparison        | Check if two values match or not          |
+| Variables         | Containers to store data                  |
+| `print()`         | Shows message on screen                   |
+
+These are the **core Python building blocks** for beginner games.
 
 Happy Coding! 🎉
