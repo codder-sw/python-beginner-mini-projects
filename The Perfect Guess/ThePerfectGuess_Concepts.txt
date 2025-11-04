@@ -1,0 +1,176 @@
+✅ Python Concepts Used (Explained in Detail)
+
+Below concepts are used in the guessing game program — read them to fully understand the logic.
+
+1. Importing Modules
+import random
+
+Python has many built-in libraries (also called modules) that provide extra features.
+
+random module gives functions to generate random numbers.
+
+Think of a module like a “toolbox”.
+You import it to use its tools (functions).
+
+2. Random Number Generator
+random.randint(1,100)
+
+randint(a, b) returns a random integer between a and b (inclusive)
+
+Here it gives a number between 1 and 100
+
+Example:
+
+random.randint(1,3)  # Possible output: 1,2,3
+
+
+Used so the program can choose a secret number to guess.
+
+3. Variables
+
+Example:
+
+n = random.randint(1,100)
+a = -1
+guesses = 0
+
+
+Variables store values in memory
+
+n stores secret number
+
+a stores user's guess
+
+guesses counts attempts
+
+Variables are like labeled boxes storing values.
+
+4. Assignment Operators
+
+= assigns value
+
++= increases value
+
+Example:
+
+guesses += 1          # same as guesses = guesses + 1
+
+
+Used to count how many guesses user makes.
+
+5. While Loop
+while (a != n):
+
+Runs repeatedly until condition becomes false.
+
+Condition: a != n means guess is not equal to secret number
+
+Loop continues until correct guess
+
+While loop = Keep repeating until the target is reached.
+
+6. Taking Input
+input("Guess the number: ")
+
+Takes input from user as string
+
+Always returns string
+
+7. Type Conversion
+int(input(...))
+
+Because input is a string, we convert it to integer to compare numbers.
+
+Example:
+
+"5"  → int("5") = 5
+
+8. Conditional Statements
+if / elif / else
+
+Used to make decisions.
+
+if a > n:
+    print("Lower number Please")
+elif a < n:
+    print("Higher number Please")
+else:
+    print("Correct guess!")
+
+
+Meaning:
+
+If guess is greater — tell user to go lower
+
+If guess is smaller — tell user to go higher
+
+Else — guess is correct
+
+Conditions make the game interactive.
+
+9. Comparison Operators
+
+Used inside if-conditions:
+
+Operator	Meaning
+>	greater than
+<	less than
+==	equal
+!=	not equal
+
+Example:
+
+if a > n:
+
+10. Print Function
+
+Used to show messages to user.
+
+Example:
+
+print("Higher number Please")
+
+11. f-String (Formatted String)
+f"You guessed in {guesses} attempts"
+
+Allows variables inside strings easily.
+
+Traditional way:
+
+"You guessed in " + str(guesses) + " attempts"
+
+
+F-string makes it easier:
+
+f"You guessed in {guesses} attempts"
+
+12. Program Flow
+How the program runs step-by-step:
+
+Random number generated
+
+Ask user to guess
+
+Compare numbers
+
+Hint: higher/lower
+
+Count attempts
+
+Stop when correct guess
+
+Show attempts count
+
+✅ Summary Table
+Concept	Purpose
+Module Import	Bring extra functions into program
+Random Number	Secret number for game
+Variables	Store data values
+Assignment	Update values
+While Loop	Repeat until correct guess
+Input	Take user guess
+Type casting	Convert guess to number
+If-Else	Compare guess & give hints
+Comparison Ops	Check number relations
+Print	Message to user
+f-string	Better formatted output
