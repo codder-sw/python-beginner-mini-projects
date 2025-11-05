@@ -1,0 +1,123 @@
+📘 Part 1 — PDF Merger (Final Code + Deep Explanation)
+✅ Full Program
+from PyPDF2 import PdfMerger
+import os
+
+# Create PDF merger object
+merger = PdfMerger()
+pdfs = []
+
+print("📌 Example path format:")
+print(r"C:\Users\SHREE\Downloads\file1.pdf\n")
+
+# Ask how many PDFs to merge
+while True:
+    try:
+        n = int(input("How many PDF files do you want to merge?\n"))
+        break
+    except ValueError:
+        print("❌ Please enter a valid number!")
+
+# Take full file paths
+for i in range(n):
+    while True:
+        file_path = input(f"Enter FULL PATH of PDF {i + 1} (include .pdf): ").strip()
+
+        # ✅ Check if file exists
+        if os.path.isfile(file_path):
+            pdfs.append(file_path)
+            break
+        else:
+            print(f"❌ File not found: {file_path}")
+            print("👉 Please give correct path. Example:")
+            print(r"C:\Users\SHREE\Downloads\somefile.pdf")
+
+# ✅ Merge files
+for pdf in pdfs:
+    merger.append(pdf)
+
+output_name = "merged2-pdf.pdf"
+merger.write(output_name)
+merger.close()
+
+print(f"\n✅ PDFs merged successfully!")
+print(f"📂 Output file: {output_name}")
+
+🧠 Concept Explanation (Beginner Friendly)
+Concept	Meaning	Example
+Import Module	Bring external tools	from PyPDF2 import PdfMerger
+Object	Special variable with functions	merger = PdfMerger()
+List	Stores many values	pdfs = []
+Loop	Repeat code	for i in range(n)
+Try-except	Handle errors	Validate numbers
+Condition	If something is true	if os.path.isfile()
+Function	Pre-defined task	merger.append()
+🔍 Line-by-Line Explanation
+Code	Meaning
+from PyPDF2 import PdfMerger	Import PDF merging tool
+import os	Access system functions
+merger = PdfMerger()	Create merger machine
+pdfs = []	Empty list to store files
+while True:	Run until correct input
+try:	Try risky code
+int(input())	Take number input
+except ValueError:	If input not number
+for i in range(n):	Loop n times
+input().strip()	Take clean file path
+os.path.isfile()	Check if file exists
+pdfs.append()	Store file path
+merger.append()	Add PDF to merge machine
+write()	Create final file
+close()	Release resources
+📦 Part 2 — Add Features Code Collection
+✅ 1️⃣ Auto-Merge All PDFs from Folder
+from PyPDF2 import PdfMerger
+import os
+
+folder = input("Enter folder path: ")
+
+merger = PdfMerger()
+
+for file in os.listdir(folder):
+    if file.endswith(".pdf"):
+        merger.append(os.path.join(folder, file))
+
+merger.write("auto_merged.pdf")
+merger.close()
+print("✅ All PDFs merged successfully!")
+
+
+✔ No manual input
+✔ Reads automatically
+
+✅ 2️⃣ Choose Output File Name
+output = input("Enter output file name (without .pdf): ") + ".pdf"
+merger.write(output)
+
+✅ 3️⃣ Merge Selected Pages Only
+merger.append("file1.pdf", pages=(0,3))  # merge pages 0 to 2
+
+✅ 4️⃣ Split PDF
+from PyPDF2 import PdfReader, PdfWriter
+
+reader = PdfReader("input.pdf")
+
+for i in range(len(reader.pages)):
+    writer = PdfWriter()
+    writer.add_page(reader.pages[i])
+
+    with open(f"page_{i+1}.pdf", "wb") as f:
+        writer.write(f)
+
+print("✅ PDF split into single pages!")
+
+✅ 5️⃣ Extract Text from PDF
+from PyPDF2 import PdfReader
+
+reader = PdfReader("file.pdf")
+
+text = ""
+for page in reader.pages:
+    text += page.extract_text()
+
+print(text)
