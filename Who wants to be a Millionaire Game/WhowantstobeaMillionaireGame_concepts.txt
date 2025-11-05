@@ -1,0 +1,221 @@
+Line-by-line & concept explanation
+
+I’ll go through the code in the same order as above. For each line/block I state what it does, why it’s there, and core concept(s) illustrated.
+
+import random
+
+What: Loads Python’s random module.
+
+Why: We need functions for random behavior: shuffle() to randomize questions/options and uniform() to generate the prize multiplier.
+
+Concepts: modules, randomness, function import.
+
+questions = [ {...}, {...}, ... ]
+
+What: Creates a list containing dictionaries. Each dictionary represents one question, its options (another dictionary), its category, and the correct option key ("answer").
+
+Why: Structured storage makes it easy to iterate questions and access their fields by name.
+
+Concepts: lists, dictionaries, nested data structures, data modeling.
+
+initial_prize = 10000 / current_prize = initial_prize / total_won = 0
+
+What: Initialize numeric variables.
+
+Why: initial_prize is the base prize; current_prize changes after each correct answer; total_won accumulates the player’s total earnings.
+
+Concepts: variables, assignment, numeric state keeping.
+
+random.shuffle(questions)
+
+What: Reorders the questions list in place randomly.
+
+Why: So each new game has questions in a different order — increases replayability.
+
+Concepts: list mutation, randomness.
+
+print("🎮 Welcome...") / input("Press ENTER...")
+
+What: Welcome text and pause waiting for user to press Enter.
+
+Why: Simple UI/UX: show greeting and let player start when ready.
+
+Concepts: console I/O, blocking input.
+
+for q in questions:
+
+What: Start a loop that visits each question dictionary in the (shuffled) list.
+
+Why: We present questions sequentially to the player.
+
+Concepts: for-loops, iteration.
+
+Inside the loop — question display:
+
+print(f"\n📂 Category: {q['category']}")
+
+print(f"❓ {q['question']}")
+
+What: Show the category and question text.
+
+Why: Gives context and displays the question.
+
+Concepts: dictionary lookup, f-strings (string interpolation).
+
+option_items = list(q["options"].items())
+
+What: Converts the options dictionary (e.g. {"A":"Amazon", ...}) into a list of (key, value) tuples like [("A","Amazon"), ...].
+
+Why: Dictionaries are unordered (or insertion-ordered) — converting to a list enables shuffling of option pairs as units (label+text).
+
+Concepts: dict methods, .items(), list conversion, tuple pair structure.
+
+random.shuffle(option_items)
+
+What: Randomly reorders the list of option (label, text) pairs.
+
+Why: So options appear in random positions each time; prevents memorizing “A is always correct”.
+
+Concepts: randomness, list mutation.
+
+new_labels = ["A","B","C","D"] / shuffled_options = {} / correct_label = ""
+
+What: Prepare new labels for display; create storage for the newly labeled options; prepare container for remapped correct answer.
+
+Why: After shuffling, old labels (old_label) no longer correspond to displayed letters — we need to assign fresh labels and find which new letter maps to the original correct answer.
+
+Concepts: lists, dict initialization, variable initialization.
+
+for new_label, (old_label, text) in zip(new_labels, option_items):
+
+What: Walk through elements of new_labels and pairs from option_items in parallel. Each iteration gives a new_label (A/B/C/D) and an (old_label, text) tuple.
+
+Why: To map each shuffled option to a new display letter while carrying original label info to detect which one was the correct option originally.
+
+Concepts: zip() to combine sequences, tuple unpacking.
+
+Inside that for:
+
+shuffled_options[new_label] = text
+
+What: Save the option text under the new label in shuffled_options dict.
+
+Why: So we can display options using their new labels.
+
+Concepts: dictionary assignment.
+
+if old_label == q["answer"]:
+
+What: Checks whether the option we just placed was the original correct answer.
+
+Why: Because the correct answer was defined relative to the original labels (A/B/C/D) — after shuffling we must find the new label that now holds the correct text.
+
+If true: correct_label = new_label sets the new label (e.g. "C") as the correct answer key.
+
+Concepts: conditional test, mapping correctness across reorder.
+
+for label, text in shuffled_options.items(): print(f" {label}) {text}")
+
+What: Display each shuffled option with its new label.
+
+Why: Present options to player in randomized order.
+
+Concepts: dict iteration, formatted printing.
+
+user = input("\nYour answer (A/B/C/D): ").upper()
+
+What: Read player's input and convert to uppercase.
+
+Why: Normalize input so both a and A are treated the same.
+
+Concepts: input reading, string methods, normalization.
+
+if user == correct_label:
+
+What: Compare player's answer to the stored new correct label.
+
+Why: Determine whether the player answered correctly after options got remapped.
+
+Concepts: equality comparison, control flow.
+
+If correct:
+
+total_won += current_prize
+
+What: Add this question’s prize to the total.
+
+Why: Accumulate winnings.
+
+Concepts: in-place arithmetic (+=), state update.
+
+multiplier = round(random.uniform(1.5, 2.5), 2)
+
+What: Pick a random floating multiplier between 1.5 and 2.5 and round it to 2 decimals.
+
+Why: Determines next question’s prize growth as specified.
+
+Concepts: random float generation, rounding.
+
+current_prize = int(current_prize * multiplier)
+
+What: Update current_prize by multiplying by the new multiplier and cast to int.
+
+Why: Next question is worth more; cast ensures prize is integer rupees.
+
+Concepts: arithmetic, type conversion.
+
+Else (wrong):
+
+print("Wrong...") + break
+
+What: Show wrong answer message and exit the for loop immediately.
+
+Why: Game-over on first wrong answer as per your choice.
+
+Concepts: control flow, break.
+
+print("\n🏁 GAME OVER") / print(f"🎉 Total Money Won: ₹{total_won}")
+
+What: Final game messages and total money earned.
+
+Why: Summary and graceful program end.
+
+Concepts: output formatting, final state reporting.
+
+Important implementation notes (pitfalls & improvements)
+
+Why we convert options.items() to a list: .items() returns a view; we need a list to shuffle. If we shuffled keys and texts separately, we might lose the pairing between original label and option text — that’s why we shuffle (label, text) pairs.
+
+Correct-label remapping: The original answer key refers to original labels. After shuffle, the correct option moves; we must record which new label holds the original correct item — otherwise correctness checks will fail.
+
+.upper() normalization: prevents user input case-sensitivity errors.
+
+Rounding multiplier then casting to int: avoids fractional rupee values. Be aware casting truncates decimals (e.g., 12345.67 → 12345). You may prefer round() instead of int() if you want proper rounding.
+
+break ends game immediately: If you want checkpoints or partial safety nets (like guaranteed amounts), you would implement those before the break.
+
+No input validation for A/B/C/D: If user enters invalid input (like E or blank), the code treats it as wrong. You can add a small loop to re-prompt when input not in ["A","B","C","D"].
+
+Quick concept map (one-line each)
+
+Module (random): randomness & shuffle
+
+List: ordered container for questions
+
+Dictionary: structured record for each question
+
+Loop (for): iterate questions
+
+Zip: combine new labels with shuffled items
+
+Shuffle: randomize order
+
+Input / .upper(): read & normalize player input
+
+Condition (if/else): compare answers & branch
+
+Break: stop loop on wrong answer
+
+f-strings: readable formatted output
+
+State variables: current_prize, total_won track game progression
